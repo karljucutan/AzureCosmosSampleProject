@@ -33,6 +33,8 @@ namespace AzureCosmosSampleProject
             var courses = await GetAndDisplayCourses();
 
             await UdateRating(courses.First(), 6);
+
+            await DeleteCourse(courses.First().id, courses.First().category);
         }
 
         private static CosmosClient ConnectDb()
@@ -107,6 +109,18 @@ namespace AzureCosmosSampleProject
 
             Console.WriteLine($"Rating Updated: Id: {course.id}, Course: {course.name}, Category: {course.category}, Previous Rating: {course.rating}, New Rating: {newRating}");
 
+        }
+
+        private static async Task DeleteCourse(string id, string category)
+        {
+            var cosmosClient = ConnectDb();
+            string databaseId = "appdb";
+            string containerId = "courses";
+
+            var database = cosmosClient.GetDatabase(databaseId);
+            var container = database.GetContainer(containerId);
+
+            var item = await container.DeleteItemAsync<Course>(id, new PartitionKey(category));
         }
     }
 
