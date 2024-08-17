@@ -39,13 +39,13 @@ namespace AzureCosmosSampleProject
             //await DeleteCourse(courses.First().id, courses.First().category);
 
             // Create Courses
-            await CreateCourse(new Course("Az-104", 4.7, "Certification",
-                new int[] { 1, 2, 3 },
-                new List<Student> { new Student("S01", 9.99m), new Student("S03", 10.99m) }));
-            await CreateCourse(new Course("Az-Kubernetes", 4.0, "Software",
-                new int[] { 2, 3, 4 },
-                new List<Student> { new Student("S03", 8.99m), new Student("S04", 8.99m) }));
-            await CreateCourse(new Course("Az-204", 4.8, "Certification"));
+            //await CreateCourse(new Course("Az-104", 4.7, "Certification",
+            //    new int[] { 1, 2, 3 },
+            //    new List<Student> { new Student("S01", 9.99m), new Student("S03", 10.99m) }));
+            //await CreateCourse(new Course("Az-Kubernetes", 4.0, "Software",
+            //    new int[] { 2, 3, 4 },
+            //    new List<Student> { new Student("S03", 8.99m), new Student("S04", 8.99m) }));
+            //await CreateCourse(new Course("Az-204", 4.8, "Certification"));
         }
 
         private static CosmosClient ConnectDb()
@@ -96,6 +96,9 @@ namespace AzureCosmosSampleProject
                         Console.WriteLine($"Course Name: {item.name}");
                         Console.WriteLine($"Course Rating: {item.rating}");
                         Console.WriteLine($"Course Category: {item.category}");
+
+
+                        Console.WriteLine($"Course Serialized: {System.Text.Json.JsonSerializer.Serialize(item)}\n\n");
 
                     }
                 }
