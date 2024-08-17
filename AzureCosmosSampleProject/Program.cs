@@ -32,9 +32,20 @@ namespace AzureCosmosSampleProject
             // Get and Display Courses
             var courses = await GetAndDisplayCourses();
 
-            await UdateRating(courses.First(), 6);
+            // Update Course Rating
+            //await UdateRating(courses.First(), 6);
 
-            await DeleteCourse(courses.First().id, courses.First().category);
+            // Delete Course
+            //await DeleteCourse(courses.First().id, courses.First().category);
+
+            // Create Courses
+            await CreateCourse(new Course("Az-104", 4.7, "Certification",
+                new int[] { 1, 2, 3 },
+                new List<Student> { new Student("S01", 9.99m), new Student("S03", 10.99m) }));
+            await CreateCourse(new Course("Az-Kubernetes", 4.0, "Software",
+                new int[] { 2, 3, 4 },
+                new List<Student> { new Student("S03", 8.99m), new Student("S04", 8.99m) }));
+            await CreateCourse(new Course("Az-204", 4.8, "Certification"));
         }
 
         private static CosmosClient ConnectDb()
@@ -130,6 +141,8 @@ namespace AzureCosmosSampleProject
         public string? name { get; set; }
         public double rating { get; set; }
         public string? category { get; set; }
+        public int[] publicChapters { get; set; }
+        public List<Student> students { get; set; }
 
         public Course()
         {
@@ -142,6 +155,25 @@ namespace AzureCosmosSampleProject
             this.name = name;
             this.rating = rating;
             this.category = category;
+        }
+
+        public Course(string? name, double rating, string? category, int[] publicChapters, List<Student> students)
+            : this(name, rating, category)
+        {
+            this.publicChapters = publicChapters;
+            this.students = students;
+        }
+    }
+
+    public class Student
+    {
+        public string? id { get; set; }
+        public decimal price { get; set; } 
+
+        public Student(string id, decimal price)
+        {
+            this.id = id;
+            this.price = price;
         }
     }
 }
